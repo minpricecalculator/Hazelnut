@@ -10,7 +10,11 @@ app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'pgi_hazelnut_secure_key_2026')
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 app.config['SESSION_COOKIE_SECURE'] = False 
-CORS(app, supports_credentials=True, origins=["http://localhost:8000", "http://127.0.0.1:8000"])
+CORS(app, supports_credentials=True, origins=[
+    "http://localhost:8000", "http://127.0.0.1:8000",
+    "http://127.0.0.1:8000",
+    "https://github.com/minpricecalculator"
+    ])
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PARAMS_FILE = os.path.join(BASE_DIR, 'params.json')
