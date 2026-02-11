@@ -1,0 +1,24 @@
+{
+    "min_margin_pct": 0.1,
+    "certification_defaults_ha": 150,
+    "reference_yield_kg_ha": 1660,
+    "min_consortium_price": 3.62,
+    "quality_table": {
+        "A": 0.2,
+        "B": 0,
+        "C": -0.15
+    },
+    "risk_table": {
+        "thresholds": [
+            0.9,
+            0.7,
+            0.5
+        ],
+        "premiums": [
+            0,
+            0.1,
+            0.25,
+            0.4
+        ]
+    }
+}
