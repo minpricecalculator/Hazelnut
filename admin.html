@@ -112,9 +112,17 @@
     }
 
     async function loadCurrentParams() {
-        const res = await fetch(`${API_BASE_URL}/admin/parameters`, { credentials: 'include' });
-        const p = await res.json();
-        
+		const response = await fetch(`${API_BASE_URL}/admin/parameters`, {
+			credentials: 'include' // This tells the browser to send the "key"
+		});
+    
+		if (response.status === 401) {
+			alert("Session expired. Please log in again.");
+			return;
+		}
+
+		const p = await response.json();
+		
         // Economics
         document.getElementById('marginInput').value = p.min_margin_pct;
         document.getElementById('certDefaultInput').value = p.certification_defaults_ha;

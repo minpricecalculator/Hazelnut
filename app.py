@@ -12,13 +12,14 @@ app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 app.config['SESSION_COOKIE_SECURE'] = False 
 app.config.update(
     SESSION_COOKIE_SAMESITE='None',
-    SESSION_COOKIE_SECURE=True  # Required for SameSite='None'
+    SESSION_COOKIE_SECURE=True,    # Must be True for HTTPS
+    SECRET_KEY='minpricecalculator' # Change this to a random string
 )
+
+# CORS to allow credentials (the cookies)
 CORS(app, supports_credentials=True, origins=[
-    "https://minpricecalculator.github.io",
-    "http://127.0.0.1:8000",
-    "http://localhost:8000"
-    ])
+    "https://minpricecalculator.github.io"
+])
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PARAMS_FILE = os.path.join(BASE_DIR, 'params.json')
