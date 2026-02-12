@@ -10,6 +10,10 @@ app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'pgi_hazelnut_secure_key_2026')
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 app.config['SESSION_COOKIE_SECURE'] = False 
+app.config.update(
+    SESSION_COOKIE_SAMESITE='None',
+    SESSION_COOKIE_SECURE=True  # Required for SameSite='None'
+)
 CORS(app, supports_credentials=True, origins=[
     "https://minpricecalculator.github.io",
     "http://127.0.0.1:8000",
