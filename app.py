@@ -11,9 +11,9 @@ app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'pgi_hazelnut_secure_key_202
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 app.config['SESSION_COOKIE_SECURE'] = False 
 CORS(app, supports_credentials=True, origins=[
+    "https://minpricecalculator.github.io",
     "http://localhost:8000", "http://127.0.0.1:8000",
-    "http://127.0.0.1:8000",
-    "https://github.com/minpricecalculator"
+    "http://127.0.0.1:8000"    
     ])
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
