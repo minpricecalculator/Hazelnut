@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About the Algorithm - PGI Hazelnut Calculator</title>
+    <title>Metodologia di Calcolo - Calcolatore Nocciola IGP</title>
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -11,92 +11,92 @@
     <div class="max-w-4xl mx-auto">
         <nav class="mb-8 flex justify-between items-center">
             <a href="index.html" class="text-emerald-700 font-bold hover:underline flex items-center">
-                &larr; Back to Calculator
+                &larr; Torna al Calcolatore
             </a>
-            <span class="text-gray-400 text-sm">PGI Hazelnut Consortium</span>
+            <span class="text-gray-400 text-sm">Consorzio Nocciola IGP</span>
         </nav>
 
         <header class="mb-10">
-            <h1 class="text-3xl font-bold text-slate-800">Calculation Methodology</h1>
+            <h1 class="text-3xl font-bold text-slate-800">Metodologia di Calcolo</h1>
             <p class="text-gray-600 mt-2 text-lg">
-                How we determine the minimum economically sustainable price.
+                Come determiniamo il prezzo minimo economicamente sostenibile.
             </p>
         </header>
 
         <main class="space-y-8">
             
             <section class="bg-white p-8 rounded-xl shadow-sm border border-gray-200">
-				<h2 class="text-xl font-bold text-emerald-800 mb-4 border-b border-gray-100 pb-2">1. The Formula</h2>
+				<h2 class="text-xl font-bold text-emerald-800 mb-4 border-b border-gray-100 pb-2">1. La Formula</h2>
 				<p class="text-gray-700 mb-6">
-					The minimum price ($P_{min}$) is calculated to cover production costs, guarantee a profit margin, and automatically adjust for quality and climate risks.
+					Il prezzo minimo ($P_{min}$) è calcolato per coprire i costi di produzione, garantire un margine di profitto e adeguarsi automaticamente ai rischi qualitativi e climatici.
 				</p>
     
 				<div class="bg-slate-50 p-6 rounded-lg border border-slate-200 font-mono text-sm md:text-base overflow-x-auto">
-					<p class="mb-2"><span class="font-bold text-slate-700">Step 1:</span> Base_Cost = (Production_Costs + Cert_Defaults) / 	Marketable_Yield</p>
-					<p class="mb-2"><span class="font-bold text-slate-700">Step 2:</span> Cost_w_Margin = Base_Cost × (1 + Margin_%)</p>
-					<p class="text-emerald-700 font-bold mt-4">P_min = Cost_w_Margin + Quality_Adjustment + Risk_Premium</p>
+					<p class="mb-2"><span class="font-bold text-slate-700">Passaggio 1:</span> Costo_Base = (Costi_Produzione + Default_Certificazione) / Resa_Commercializzabile</p>
+					<p class="mb-2"><span class="font-bold text-slate-700">Passaggio 2:</span> Costo_con_Margine = Costo_Base × (1 + Margine_%)</p>
+					<p class="text-emerald-700 font-bold mt-4">P_min = Costo_con_Margine + Adeguamento_Qualità + Premio_di_Rischio</p>
 				</div>
 				<p class="text-xs text-gray-500 mt-2 italic">
-					* The final price is always the greater of P_min or the Consortium Floor Price.
+					* Il prezzo finale è sempre il maggiore tra P_min o il Prezzo Minimo Consortile.
 				</p>
 
 				<div class="mt-6">
 					<p class="text-gray-600 text-lg mb-2">
-						🚜 <strong>Farmer Inputs (Dynamic Variables)</strong><br>
-						<span class="text-sm">These are entered by the producer for each specific batch.</span>
+						🚜 <strong>Dati del Produttore (Variabili Dinamiche)</strong><br>
+						<span class="text-sm">Inseriti dall'agricoltore per ogni specifico lotto.</span>
 					</p>
 					<ul class="list-disc pl-5 text-gray-600 space-y-1">
-						<li><strong>Production Costs (€/ha):</strong> Operational expenses (labor, fertilizer, fuel). Excludes certification.</li>
-						<li><strong>Raw Yield (kg/ha):</strong> Total in-shell weight harvested per hectare.</li>
-						<li><strong>Marketable %:</strong> The kernel-to-shell ratio (Yield Point), typically 40-50%.</li>
-						<li><strong>Quality Class:</strong> The specific grade of the batch (A, B, or C).</li>
+						<li><strong>Costi di produzione (€/ha):</strong> Spese operative (manodopera, concimi, carburante). Esclude la certificazione.</li>
+						<li><strong>Resa Grezza (kg/ha):</strong> Peso totale in guscio raccolto per ettaro.</li>
+						<li><strong>Resa Commercializzabile %:</strong> Il rapporto gheriglio/guscio (Punto Resa), tipicamente 40-50%.</li>
+						<li><strong>Classe di Qualità:</strong> Il grado specifico del lotto (A, B o C).</li>
 					</ul>
 				</div>
 
 				<div class="mt-6">
 					<p class="text-gray-600 text-lg mb-2">
-						🏛️ <strong>Consortium Parameters (Fixed Constants)</strong><br>
-						<span class="text-sm">These are set globally by the Admin to ensure fairness and standard standards.</span>
+						🏛️ <strong>Parametri del Consorzio (Costanti Fisse)</strong><br>
+						<span class="text-sm">Impostati globalmente dall'Amministratore per garantire equità e standard condivisi.</span>
 					</p>
 					<ul class="list-disc pl-5 text-gray-600 space-y-1">
-						<li><strong>Certification Defaults (€/ha):</strong> Fixed cost added to every hectare (e.g., €200).</li>
-						<li><strong>Margin %:</strong> The mandatory profit margin guaranteed to the farmer (e.g., 15%).</li>
-						<li><strong>Reference Yield:</strong> The historical average (e.g., 1600 kg/ha) used to calculate stress.</li>
-						<li><strong>Floor Price:</strong> The absolute minimum safety net price.</li>
-						<li><strong>Adjustment Tables:</strong> The fixed €/kg values for Quality bonuses and Risk premiums.</li>
+						<li><strong>Costi Certificazione (€/ha):</strong> Costo fisso aggiunto per ogni ettaro (es. €200).</li>
+						<li><strong>Margine %:</strong> Il margine di profitto garantito all'agricoltore (es. 15%).</li>
+						<li><strong>Resa di Riferimento:</strong> La media storica (es. 1600 kg/ha) utilizzata per calcolare lo stress.</li>
+						<li><strong>Prezzo Minimo (Floor):</strong> Il prezzo assoluto di salvaguardia (rete di sicurezza).</li>
+						<li><strong>Tabelle di Adeguamento:</strong> Valori fissi in €/kg per i bonus Qualità e i premi di Rischio.</li>
 					</ul>
 				</div>
 			</section>
 
             <section class="bg-white p-8 rounded-xl shadow-sm border border-gray-200">
-                <h2 class="text-xl font-bold text-emerald-800 mb-4 border-b border-gray-100 pb-2">2. Quality Adjustments</h2>
+                <h2 class="text-xl font-bold text-emerald-800 mb-4 border-b border-gray-100 pb-2">2. Adeguamenti di Qualità</h2>
                 <p class="text-gray-700 mb-4">
-                    Prices are adjusted based on the quality class of the batch to reward high uniformity and penalize defects.
+                    I prezzi vengono adeguati in base alla classe qualitativa del lotto per premiare l'alta uniformità e penalizzare i difetti.
                 </p>
                 
                 <div class="overflow-hidden rounded-lg border border-gray-200">
                     <table class="w-full text-left text-sm">
                         <thead class="bg-gray-100 text-gray-700">
                             <tr>
-                                <th class="p-3 font-bold">Class</th>
-                                <th class="p-3 font-bold">Description</th>
-                                <th class="p-3 font-bold text-right">Adjustment</th>
+                                <th class="p-3 font-bold">Classe</th>
+                                <th class="p-3 font-bold">Descrizione</th>
+                                <th class="p-3 font-bold text-right">Adeguamento</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100">
                             <tr>
                                 <td class="p-3 font-bold text-emerald-700">A</td>
-                                <td class="p-3">Premium: High uniformity, low defects.</td>
+                                <td class="p-3">Premium: Alta uniformità, difetti minimi.</td>
                                 <td class="p-3 text-right font-mono text-emerald-700">+€0.20</td>
                             </tr>
                             <tr>
                                 <td class="p-3 font-bold text-gray-700">B</td>
-                                <td class="p-3">Standard: PGI-compliant commercial quality.</td>
+                                <td class="p-3">Standard: Qualità commerciale conforme al disciplinare IGP.</td>
                                 <td class="p-3 text-right font-mono text-gray-500">€0.00</td>
                             </tr>
                             <tr>
                                 <td class="p-3 font-bold text-red-700">C</td>
-                                <td class="p-3">Low: Borderline quality, higher defects.</td>
+                                <td class="p-3">Bassa: Qualità al limite, difetti più elevati.</td>
                                 <td class="p-3 text-right font-mono text-red-700">-€0.15</td>
                             </tr>
                         </tbody>
@@ -105,14 +105,14 @@
             </section>
 
             <section class="bg-white p-8 rounded-xl shadow-sm border border-gray-200">
-                <h2 class="text-xl font-bold text-emerald-800 mb-4 border-b border-gray-100 pb-2">3. Climate Risk Premium</h2>
+                <h2 class="text-xl font-bold text-emerald-800 mb-4 border-b border-gray-100 pb-2">3. Premio di Rischio Climatico</h2>
                 <p class="text-gray-700 mb-4">
-                    We calculate a <strong>Yield Ratio</strong> to objectively measure crop stress. If your yield drops significantly below the reference average, a risk premium is automatically applied.
+                    Calcoliamo un <strong>Rapporto di Resa</strong> per misurare oggettivamente lo stress del raccolto. Se la tua resa scende significativamente sotto la media di riferimento, viene applicato automaticamente un premio di rischio.
                 </p>
 
                 <div class="bg-emerald-50 p-4 rounded-lg mb-6 border border-emerald-100">
                     <p class="text-emerald-900 font-medium text-center">
-                        Yield Ratio = Your Marketable Yield / Reference Yield (1600 kg/ha)
+                        Rapporto Resa = Tua Resa Commercializzabile / Resa di Riferimento (1600 kg/ha)
                     </p>
                 </div>
 
@@ -120,30 +120,30 @@
                     <table class="w-full text-left text-sm">
                         <thead class="bg-gray-100 text-gray-700">
                             <tr>
-                                <th class="p-3 font-bold">Yield Ratio</th>
-                                <th class="p-3 font-bold">Interpretation</th>
-                                <th class="p-3 font-bold text-right">Risk Premium</th>
+                                <th class="p-3 font-bold">Rapporto Resa</th>
+                                <th class="p-3 font-bold">Interpretazione</th>
+                                <th class="p-3 font-bold text-right">Premio di Rischio</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100">
                             <tr>
                                 <td class="p-3 font-mono">≥ 0.90</td>
-                                <td class="p-3"><span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-bold">NORMAL</span></td>
+                                <td class="p-3"><span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-bold">NORMALE</span></td>
                                 <td class="p-3 text-right font-mono">€0.00</td>
                             </tr>
                             <tr>
                                 <td class="p-3 font-mono">0.70 – 0.89</td>
-                                <td class="p-3"><span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs font-bold">MILD STRESS</span></td>
+                                <td class="p-3"><span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs font-bold">STRESS LIEVE</span></td>
                                 <td class="p-3 text-right font-mono">+€0.10</td>
                             </tr>
                             <tr>
                                 <td class="p-3 font-mono">0.50 – 0.69</td>
-                                <td class="p-3"><span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs font-bold">SEVERE</span></td>
+                                <td class="p-3"><span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs font-bold">GRAVE</span></td>
                                 <td class="p-3 text-right font-mono">+€0.25</td>
                             </tr>
                             <tr>
                                 <td class="p-3 font-mono">< 0.50</td>
-                                <td class="p-3"><span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-bold">EXTREME</span></td>
+                                <td class="p-3"><span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-bold">ESTREMO</span></td>
                                 <td class="p-3 text-right font-mono">+€0.40</td>
                             </tr>
                         </tbody>
@@ -154,7 +154,7 @@
         </main>
         
         <footer class="mt-12 text-center text-gray-500 text-sm pb-8">
-            &copy; 2026 PGI Hazelnut Consortium. Open Source Transparency.
+            &copy; 2026 Consorzio Nocciola IGP. Trasparenza Open Source.
         </footer>
     </div>
 </body>

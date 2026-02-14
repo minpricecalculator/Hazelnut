@@ -8,31 +8,31 @@
 </head>
 <body class="bg-slate-100 p-8">
     <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg">
-        <h2 class="text-2xl font-bold text-slate-800 mb-6 border-b pb-2">Consortium Admin Panel</h2>
+        <h2 class="text-2xl font-bold text-slate-800 mb-6 border-b pb-2">Pannello di Amministrazione del Consorzio</h2>
         
         <div id="login-section" class="space-y-4 max-w-md mx-auto">
             <input type="password" id="adminPass" placeholder="Enter Admin Password" class="w-full p-2 border rounded">
-            <button onclick="login()" class="w-full bg-slate-800 text-white p-2 rounded hover:bg-slate-700">Login</button>
+            <button onclick="login()" class="w-full bg-slate-800 text-white p-2 rounded hover:bg-slate-700">Accedi</button>
         </div>
 
         <div id="admin-controls" class="hidden grid grid-cols-1 md:grid-cols-2 gap-8">
             
             <div class="space-y-4">
-                <h3 class="font-bold text-emerald-700 border-b">Economic Baselines</h3>
+                <h3 class="font-bold text-emerald-700 border-b">Basi Economiche</h3>
                 <div>
-                    <label class="block text-sm font-bold">Minimum Margin (%)</label>
+                    <label class="block text-sm font-bold">Margine Minimo (%)</label>
                     <input type="number" id="marginInput" step="0.01" class="w-full p-2 border rounded">
                 </div>
                 <div>
-                    <label class="block text-sm font-bold">Cert. Defaults (€/ha)</label>
+                    <label class="block text-sm font-bold">Certificato Valori predefiniti (€/ha)</label>
                     <input type="number" id="certDefaultInput" step="0.01" class="w-full p-2 border rounded">
                 </div>
                 <div>
-                    <label class="block text-sm font-bold">Reference Yield (kg/ha)</label>
+                    <label class="block text-sm font-bold">Resa di riferimento (kg/ha)</label>
                     <input type="number" id="refYieldInput" step="1" class="w-full p-2 border rounded">
                 </div>
                 <div>
-                    <label class="block text-sm font-bold">Min Consortium Price (€)</label>
+                    <label class="block text-sm font-bold">Prezzo minimo del consorzio (€)</label>
                     <input type="number" id="minPriceInput" step="0.01" class="w-full p-2 border rounded">
                 </div>
             </div>
@@ -40,41 +40,41 @@
             <div class="space-y-6">
                 
                 <div>
-                    <h3 class="font-bold text-emerald-700 border-b mb-2">Quality Adjustments (€/kg)</h3>
+                    <h3 class="font-bold text-emerald-700 border-b mb-2">Aggiustamenti di qualità (€/kg)</h3>
                     <div class="grid grid-cols-3 gap-2">
                         <div>
-                            <label class="text-xs">Class A</label>
+                            <label class="text-xs">Classe A</label>
                             <input type="number" id="qualityA" step="0.01" class="w-full p-1 border rounded">
                         </div>
                         <div>
-                            <label class="text-xs">Class B</label>
+                            <label class="text-xs">Classe B</label>
                             <input type="number" id="qualityB" step="0.01" class="w-full p-1 border rounded">
                         </div>
                         <div>
-                            <label class="text-xs">Class C</label>
+                            <label class="text-xs">Classe C</label>
                             <input type="number" id="qualityC" step="0.01" class="w-full p-1 border rounded">
                         </div>
                     </div>
                 </div>
 
                 <div>
-                    <h3 class="font-bold text-emerald-700 border-b mb-2">Risk Premiums</h3>
-                    <div class="text-xs text-gray-500 mb-2">Premiums for Normal, Mild, Severe, Extreme years</div>
+                    <h3 class="font-bold text-emerald-700 border-b mb-2">Premi di rischio</h3>
+                    <div class="text-xs text-gray-500 mb-2">Premi per annate normali, moderate, severe, estreme</div>
                     <div class="grid grid-cols-2 gap-2">
                         <div>
-                            <label class="text-xs">Normal (Ratio >= 0.9)</label>
+                            <label class="text-xs">Normale (Rapporto >= 0.9)</label>
                             <input type="number" id="riskPrem0" step="0.01" class="w-full p-1 border rounded">
                         </div>
                         <div>
-                            <label class="text-xs">Mild (Ratio >= 0.7)</label>
+                            <label class="text-xs">Leggera (Rapporto >= 0.7)</label>
                             <input type="number" id="riskPrem1" step="0.01" class="w-full p-1 border rounded">
                         </div>
                         <div>
-                            <label class="text-xs">Severe (Ratio >= 0.5)</label>
+                            <label class="text-xs">Severe (Rapporto >= 0.5)</label>
                             <input type="number" id="riskPrem2" step="0.01" class="w-full p-1 border rounded">
                         </div>
                         <div>
-                            <label class="text-xs">Extreme (Ratio < 0.5)</label>
+                            <label class="text-xs">Estrema (Rapporto < 0.5)</label>
                             <input type="number" id="riskPrem3" step="0.01" class="w-full p-1 border rounded">
                         </div>
                     </div>
@@ -83,7 +83,7 @@
 
             <div class="md:col-span-2 pt-4">
                 <button onclick="updateParams()" class="w-full bg-emerald-600 text-white font-bold p-3 rounded hover:bg-emerald-700 shadow-md">
-                    Save Global Parameters
+                    Salva parametri globali
                 </button>
             </div>
         </div>
@@ -135,7 +135,7 @@
         document.getElementById('qualityB').value = p.quality_table.B;
         document.getElementById('qualityC').value = p.quality_table.C;
 
-        // Risk Premiums
+        // Premi di rischio
         document.getElementById('riskPrem0').value = p.risk_table.premiums[0];
         document.getElementById('riskPrem1').value = p.risk_table.premiums[1];
         document.getElementById('riskPrem2').value = p.risk_table.premiums[2];

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PGI Hazelnut Price Calculator</title>
+    <title>Calcolatore del prezzo della nocciola IGP</title>
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -53,21 +53,21 @@
 <body class="bg-gray-50 min-h-screen p-4 md:p-8">
     <div class="max-w-5xl mx-auto">
         <header class="mb-8 text-center">
-            <h1 class="text-3xl font-bold text-emerald-800">PGI Hazelnut Price Calculator</h1>
-            <p class="text-gray-600 mb-2">Determine your minimum economically sustainable price</p>
+            <h1 class="text-3xl font-bold text-emerald-800">Calcolatore del prezzo della nocciola IGP</h1>
+            <p class="text-gray-600 mb-2">Determina il tuo prezzo minimo economicamente sostenibile</p>
             <a href="about.html" class="inline-block text-sm text-emerald-600 font-semibold hover:text-emerald-800 hover:underline">
-                &#9432; See how the calculation works
+                &#9432; Scopri come funziona il calcolo
             </a>
         </header>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <section class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-                <h2 class="text-xl font-semibold mb-4 text-gray-700 border-b pb-2">Farm Data</h2>
+                <h2 class="text-xl font-semibold mb-4 text-gray-700 border-b pb-2">Dati aziendali</h2>
                 <form id="calcForm" class="space-y-6">
                     
                     <div>
                         <div class="flex items-center gap-2 mb-1">
-                            <label class="block text-sm font-medium text-gray-700">Production Costs (€/ha)</label>
+                            <label class="block text-sm font-medium text-gray-700">Costi di produzione (€/ha)</label>
                             <div class="tooltip text-gray-400 hover:text-emerald-600">
                                 &#9432;
                                 <span class="tooltip-text">
@@ -76,26 +76,26 @@
                                 </span>
                             </div>
                         </div>
-                        <input type="number" id="prodCost" step="0.01" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="e.g. 3000" required>
+                        <input type="number" id="prodCost" step="0.01" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="ad esempio 3000" required>
                     </div>
                     
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <div class="flex items-center gap-2 mb-1">
-                                <label class="block text-sm font-medium text-gray-700">Raw Yield (kg)</label>
+                                <label class="block text-sm font-medium text-gray-700">Resa Grezza (kg)</label>
                                 <div class="tooltip text-gray-400 hover:text-emerald-600">
                                     &#9432;
                                     <span class="tooltip-text">
-                                        Total weight of in-shell hazelnuts harvested per hectare before drying or cleaning.
+                                        Total weight of in guscio hazelnuts harvested per hectare before drying or cleaning.
                                     </span>
                                 </div>
                             </div>
-                            <input type="number" id="yield" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="e.g. 2000" required>
+                            <input type="number" id="yield" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="ad esempio 2000" required>
                         </div>
                         
                         <div>
                             <div class="flex items-center gap-2 mb-1">
-                                <label class="block text-sm font-medium text-gray-700">Marketable %</label>
+                                <label class="block text-sm font-medium text-gray-700">Commercializzabile %</label>
                                 <div class="tooltip text-gray-400 hover:text-emerald-600">
                                     &#9432;
                                     <span class="tooltip-text">
@@ -104,46 +104,46 @@
                                     </span>
                                 </div>
                             </div>
-                            <input type="number" id="commYield" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="e.g. 45" required>
+                            <input type="number" id="commYield" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="ad esempio 45" required>
                         </div>
                     </div>
 
                     <div>
                         <div class="flex items-center gap-2 mb-1">
-                            <label class="block text-sm font-medium text-gray-700">Quality Class</label>
+                            <label class="block text-sm font-medium text-gray-700">Classe di Qualità</label>
                             <div class="tooltip text-gray-400 hover:text-emerald-600">
                                 &#9432;
                                 <span class="tooltip-text">
-                                    <strong>Class A:</strong> Premium, low defects.<br>
-                                    <strong>Class B:</strong> Standard PGI.<br>
-                                    <strong>Class C:</strong> Borderline/High defects.
+                                    <strong>Classe A:</strong> Premium, low defects.<br>
+                                    <strong>Classe B:</strong> Standard PGI.<br>
+                                    <strong>Classe C:</strong> Borderline/High defects.
                                 </span>
                             </div>
                         </div>
                         <select id="qualityClass" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-emerald-500 outline-none bg-white">
-                            <option value="A">Class A (Premium +€0.20)</option>
-                            <option value="B" selected>Class B (Standard)</option>
-                            <option value="C">Class C (Low Quality -€0.15)</option>
+                            <option value="A">Classe A (Premium)</option>
+                            <option value="B" selected>Classe B (Standard)</option>
+                            <option value="C">Classe C (Bassa Qualità)</option>
                         </select>
                     </div>
 
                     <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-3 rounded-md hover:bg-emerald-700 transition shadow-lg mt-4">
-                        Calculate Minimum Price
+                        Calcola il Prezzo Minimo
                     </button>
                 </form>
             </section>
 
             <section id="results" class="bg-emerald-50 p-6 rounded-xl border border-emerald-100 hidden">
-                <h2 class="text-xl font-semibold mb-4 text-emerald-900 border-b border-emerald-200 pb-2">Calculation Result</h2>
+                <h2 class="text-xl font-semibold mb-4 text-emerald-900 border-b border-emerald-200 pb-2">Risultato del Calcolo</h2>
                 
                 <div class="text-center py-8">
-                    <span class="text-xs font-bold uppercase text-emerald-600 tracking-widest">Minimum Sustainable Price</span>
+                    <span class="text-xs font-bold uppercase text-emerald-600 tracking-widest">Prezzo Minimo Sostenibile</span>
                     <div class="text-6xl font-black text-emerald-900 my-2" id="finalPrice">€0.00</div>
-                    <span class="text-emerald-700 font-medium">per kg (in-shell)</span>
+                    <span class="text-emerald-700 font-medium">al kg (in guscio)</span>
                 </div>
                 
                 <div class="bg-white rounded-lg p-4 shadow-sm border border-emerald-100">
-                    <h3 class="font-bold text-emerald-800 mb-3 text-sm uppercase">Cost Breakdown</h3>
+                    <h3 class="font-bold text-emerald-800 mb-3 text-sm uppercase">Ripartizione dei Costi</h3>
                     <div id="breakdown" class="text-sm space-y-3 text-emerald-900">
                         </div>
                 </div>

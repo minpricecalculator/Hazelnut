@@ -59,7 +59,7 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if not session.get('logged_in'):
-            return jsonify({"error": "Unauthorized access"}), 401
+            return jsonify({"error": "Accesso non autorizzato"}), 401
         return f(*args, **kwargs)
     return decorated_function
 
@@ -89,7 +89,7 @@ def calculate():
         y_marketable = yield_ha * (marketable_pct / 100.0)
 
         if y_marketable <= 0:
-            return jsonify({"error": "Marketable yield cannot be zero"}), 400
+            return jsonify({"error": "La resa commercializzabile non può essere zero"}), 400
 
         # Step 2: Base Cost Calculation
         cert_defaults = params['certification_defaults_ha']
@@ -99,7 +99,7 @@ def calculate():
         margin_pct = params['min_margin_pct']
         cost_with_margin = base_cost_kg * (1 + margin_pct)
 
-        # Step 4: Quality Adjustment
+        # Step 4: Aggiustamento Qualità
         quality_adj = params['quality_table'].get(quality_class, 0.0)
 
         # Step 5: Risk Adjustment
@@ -134,7 +134,7 @@ def calculate():
         })
 
     except (KeyError, TypeError, ValueError) as e:
-        return jsonify({"error": f"Invalid input: {str(e)}"}), 400
+        return jsonify({"error": f"Input non valido: {str(e)}"}), 400
 
 # --- ADMIN ROUTES ---
 
@@ -143,13 +143,13 @@ def login():
     data = request.json
     if data.get('password') == ADMIN_PASSWORD:
         session['logged_in'] = True
-        return jsonify({"message": "Login successful"}), 200
-    return jsonify({"error": "Invalid password"}), 401
+        return jsonify({"message": "Accesso effettuato con successo"}), 200
+    return jsonify({"error": "Password non valida"}), 401
 
 @app.route('/admin/logout', methods=['POST'])
 def logout():
     session.pop('logged_in', None)
-    return jsonify({"message": "Logged out"}), 200
+    return jsonify({"message": "Disconnessione effettuata"}), 200
 
 @app.route('/admin/parameters', methods=['GET'])
 @login_required
@@ -161,7 +161,7 @@ def get_parameters():
 def update_parameters():
     new_params = request.json
     save_params(new_params)
-    return jsonify({"message": "Parameters updated successfully"}), 200
+    return jsonify({"message": "Parametri aggiornati con successo"}), 200
 
 if __name__ == '__main__':
     if not os.path.exists(PARAMS_FILE):

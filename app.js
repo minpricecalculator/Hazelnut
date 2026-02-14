@@ -52,25 +52,25 @@ function displayResults(data) {
     // 2. DISPLAY UPDATED BREAKDOWN
     breakdownDiv.innerHTML = `
         <div class="flex justify-between border-b border-emerald-200 py-1">
-            <span>Base Cost + Margin:</span> 
+            <span>Costo Base + Margine:</span> 
             <b>€${(b.base_cost_kg + b.margin_value).toFixed(2)}</b>
         </div>
         <div class="flex justify-between border-b border-emerald-200 py-1 text-emerald-700">
-            <span>Quality Adjustment:</span> 
+            <span>Aggiustamento Qualità:</span> 
             <b>${b.quality_adj > 0 ? '+' : ''}€${b.quality_adj.toFixed(2)}</b>
         </div>
         <div class="flex justify-between border-b border-emerald-200 py-1 text-emerald-700">
-            <span>Risk Premium (Yield Ratio ${b.yield_ratio}):</span> 
+            <span>Premio di Rischio (Yield Rapporto ${b.yield_ratio}):</span> 
             <b>+€${b.risk_premium.toFixed(2)}</b>
         </div>
         
         <div class="flex justify-between pt-2 mt-2 border-t border-emerald-200 text-xs text-gray-500">
-            <span>Consortium Floor Price:</span>
+            <span>Prezzo Minimo Consortile:</span>
             <span>€${b.consortium_min.toFixed(2)}</span>
         </div>
         
         <div class="flex justify-between text-xs text-gray-500">
-            <span>Marketable Yield: ${b.marketable_yield_kg} kg/ha</span>
+            <span>Commercializzabile Yield: ${b.marketable_yield_kg} kg/ha</span>
         </div>
     `;
 }
