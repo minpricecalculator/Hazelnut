@@ -60,7 +60,7 @@ function displayResults(data) {
             <b>${b.quality_adj > 0 ? '+' : ''}€${b.quality_adj.toFixed(2)}</b>
         </div>
         <div class="flex justify-between border-b border-emerald-200 py-1 text-emerald-700">
-            <span>Premio di Rischio (Yield Rapporto ${b.yield_ratio}):</span> 
+            <span>Premio di Rischio (Rapporto di Resa ${b.yield_ratio}):</span> 
             <b>+€${b.risk_premium.toFixed(2)}</b>
         </div>
         
@@ -70,7 +70,7 @@ function displayResults(data) {
         </div>
         
         <div class="flex justify-between text-xs text-gray-500">
-            <span>Commercializzabile Yield: ${b.marketable_yield_kg} kg/ha</span>
+            <span>Resa Commercializzabile: ${b.marketable_yield_kg} kg/ha</span>
         </div>
     `;
 }
