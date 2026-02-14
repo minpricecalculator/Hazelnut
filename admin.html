@@ -118,7 +118,7 @@
 		});
     
 		if (response.status === 401) {
-			alert("Session expired. Please log in again.");
+			alert("Sessione scaduta. Effettua nuovamente l'accesso.");
 			return;
 		}
 
@@ -171,8 +171,8 @@
             credentials: 'include'
         });
 
-        if (res.ok) alert("✅ Saved!");
-        else alert("❌ Error saving.");
+        if (res.ok) alert("✅ Salvato!");
+        else alert("❌ Errore durante il salvataggio.");
     }
 </script>
 </body>
