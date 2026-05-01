@@ -1,55 +1,78 @@
-# PGI Hazelnut Price Calculator 🌰
+# Calcolatore del prezzo della nocciola IGP 🌰
 
-**A transparent, open-source tool for determining the economically sustainable minimum price for PGI Hazelnuts.**
 
-This project allows producers to calculate a fair minimum price ($P_{min}$) that covers production costs, guarantees a profit margin, and automatically adjusts for quality grades and climate-induced yield losses.
+Metodologia di Calcolo
 
----
+Come determiniamo il prezzo minimo economicamente sostenibile.
+1. La Formula
 
-## 📐 Calculation Methodology
+Il prezzo minimo (P_min) copre i costi di produzione, garantisce un margine di profitto e si adegua automaticamente alla classe qualitativa e al rischio climatico composito.
 
-The calculator uses a 5-step algorithm to ensure fairness and economic sustainability.
+Passo 1: Resa_Commercializzabile = Resa_Grezza × (Percentuale_Commercializzabile / 100)
 
-### 1. The Core Formula
-The minimum price is calculated as:
+Passo 2: Costo_Base = (Costi_Produzione + Quota_Certificazione) / Resa_Commercializzabile
 
-$$P_{min} = \text{Cost with Margin} + \text{Quality Adjustment} + \text{Risk Premium}$$
+Passo 3: Costo_con_Margine = Costo_Base × (1 + Margine_%)
 
-*The final price is always the greater of $P_{min}$ or the Consortium Floor Price.*
+Passo 4: Correz_Qualità = lookup(Classe_Qualità)
 
-### 2. Step-by-Step Logic
+Passo 5: Resa_Adeguata_Clima = Resa_Grezza × Coeff_Clima × Coeff_Resilienza
 
-#### Step 1: Marketable Yield
-First, we calculate the actual net weight of kernels (or yield point) per hectare.
-> `Marketable_Yield = Raw_Yield_kg_ha × (Commercial_Yield_% / 100)`
+Passo 6: Rapporto_Adeguato = Resa_Adeguata_Clima / Resa_Riferimento
 
-#### Step 2: Base Production Cost
-We determine the break-even cost per kg, adding the fixed certification fees set by the Consortium.
-> `Base_Cost = (Production_Costs_ha + Certification_Defaults_ha) / Marketable_Yield`
+Passo 7: Premio_Rischio = lookup(Rapporto_Adeguato)
 
-#### Step 3: Economic Margin
-A mandatory profit margin is applied to the base cost to ensure farm sustainability.
-> `Cost_with_Margin = Base_Cost × (1 + Margin_%)`
+P_min = Costo_con_Margine + Correz_Qualità + Premio_Rischio
 
-#### Step 4: Quality Adjustment
-Prices are adjusted based on the quality class of the batch.
+* Il prezzo finale è sempre il maggiore tra P_min e il Prezzo Minimo di Consorzio.
 
-| Class | Description | Adjustment (€/kg) |
-| :--- | :--- | :--- |
-| **A** | **Premium:** Fully compliant, high uniformity, low defects. | **+ €0.20** |
-| **B** | **Standard:** PGI-compliant, standard commercial quality. | **€0.00** |
-| **C** | **Low:** Borderline quality, higher defects. | **- €0.15** |
+🚜 Variabili del Produttore (Dati Dinamici)
+Inseriti dal produttore per ogni specifica partita.
 
-#### Step 5: Climate Risk Premium
-Instead of subjective "Year Types," the system calculates a **Yield Ratio** to objectively measure crop stress.
+    Costi di Produzione (€/ha): Spese operative per ettaro (manodopera, fertilizzanti, carburante). Esclusa la certificazione.
+    Resa Grezza (kg/ha): Peso totale in guscio raccolto per ettaro.
+    % Commercializzabile: Rapporto tra peso del gheriglio e peso totale del guscio (Resa di Sgusciatura), tipicamente 40–50%.
+    Classe Qualitativa: La categoria specifica della partita (A, B o C).
+    Coefficiente Effetto Climatico (0,5–1,5): Autovalutazione del produttore sull'impatto delle condizioni climatiche sulla resa potenziale stagionale. 1,0 = anno neutro; inferiore a 1,0 = avverso; superiore a 1,0 = favorevole.
+    Coefficiente di Resilienza Aziendale (0,5–1,5): Autovalutazione della capacità dell'azienda di assorbire lo stress climatico (irrigazione, assicurazioni, riserve). 1,0 = resilienza media.
 
-> `Yield_Ratio = Marketable_Yield / Reference_Yield`
+🏛️ Parametri del Consorzio (Costanti Fisse)
+Definiti globalmente dall'Amministratore per garantire equità e uniformità di applicazione.
 
-*Reference Yield is set by the Consortium (default: 1600 kg/ha).*
+    Quota Certificazione (€/ha): Costo fisso di certificazione aggiunto a ogni ettaro (es. €25).
+    % Commercializzabile Predefinita: Valore di default suggerito dal Consorzio, precompilato nel calcolatore (es. 45%).
+    Margine %: Margine di profitto obbligatorio garantito al produttore (es. 10%).
+    Resa di Riferimento (kg/ha): Media storica usata come benchmark per lo stress climatico (es. 1.660 kg/ha).
+    Prezzo Minimo di Consorzio: Prezzo minimo assoluto di sicurezza.
+    Tabelle di Correzione: Valori fissi in €/kg per bonus di qualità e premi di rischio.
 
-| Yield Ratio | Interpretation | Risk Premium (€/kg) |
-| :--- | :--- | :--- |
-| **≥ 0.90** | Normal Year | **€0.00** |
-| **0.70 – 0.89** | Mild Stress | **+ €0.10** |
-| **0.50 – 0.69** | Severe Stress | **+ €0.25** |
-| **< 0.50** | Extreme Year | **+ €0.40** |
+2. Correzioni per la Qualità
+
+Il prezzo viene corretto in base alla classe qualitativa della partita, per premiare l'alta uniformità e penalizzare i difetti.
+Classe 	Descrizione 	Correzione
+A 	Premium: alta uniformità, difetti minimi. 	+€0,20
+B 	Standard: qualità commerciale conforme IGP. 	€0,00
+C 	Bassa: qualità al limite, difetti elevati. 	-€0,15
+3. Premio per il Rischio Climatico
+
+Invece di basarsi esclusivamente sulla resa grezza, il sistema calcola una Resa Adeguata al Clima che combina tre segnali: il raccolto effettivo, la percezione del produttore sull'effetto climatico e la capacità di resilienza aziendale. Questo valore composito viene poi confrontato con la resa di riferimento del Consorzio per determinare il livello di rischio.
+
+Resa_Adeguata_Clima = Resa_Grezza × Coeff_Clima × Coeff_Resilienza
+
+Rapporto_Adeguato = Resa_Adeguata_Clima / Resa_Riferimento
+
+🌡 Coefficiente Effetto Climatico
+
+Autovalutazione del produttore sull'impatto climatico stagionale sulla resa potenziale. Intervallo: 0,5 (perdita estrema) a 1,5 (stagione eccezionale), passo 0,1.
+
+🛡 Coefficiente di Resilienza Aziendale
+
+Autovalutazione della capacità dell'azienda di assorbire lo stress climatico (irrigazione, assicurazioni, diversificazione colturale, riserve finanziarie). Intervallo: 0,5 (molto bassa) a 1,5 (molto alta), passo 0,1.
+Rapporto Adeguato 	Interpretazione 	Premio di Rischio
+≥ 0,90 	NORMALE 	€0,00
+0,70 – 0,89 	STRESS LIEVE 	+€0,10
+0,50 – 0,69 	GRAVE 	+€0,25
+< 0,50 	ESTREMO 	+€0,40
+
+* Esempio: Resa Grezza = 2.000 kg/ha, Coeff. Clima = 0,8, Coeff. Resilienza = 0,9 → Resa Adeguata al Clima = 1.440 kg/ha → Rapporto = 1.440 / 1.660 = 0,87 → Stress Lieve → +€0,10
+
