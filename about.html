@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Metodologia di Calcolo - Calcolatore Nocciola IGP</title>
-	<link rel="icon" type="image/x-icon" href="favicon.ico">
+    <title>Metodologia di Calcolo - Calcolatore Nocciole IGP</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 min-h-screen p-4 md:p-8">
@@ -13,7 +12,7 @@
             <a href="index.html" class="text-emerald-700 font-bold hover:underline flex items-center">
                 &larr; Torna al Calcolatore
             </a>
-            <span class="text-gray-400 text-sm">Consorzio Nocciola IGP</span>
+            <span class="text-gray-400 text-sm">Consorzio Nocciole IGP</span>
         </nav>
 
         <header class="mb-10">
@@ -24,137 +23,171 @@
         </header>
 
         <main class="space-y-8">
-            
+
+            <!-- SEZIONE 1: LA FORMULA -->
             <section class="bg-white p-8 rounded-xl shadow-sm border border-gray-200">
-				<h2 class="text-xl font-bold text-emerald-800 mb-4 border-b border-gray-100 pb-2">1. La Formula</h2>
-				<p class="text-gray-700 mb-6">
-					Il prezzo minimo ($P_{min}$) è calcolato per coprire i costi di produzione, garantire un margine di profitto e adeguarsi automaticamente ai rischi qualitativi e climatici.
-				</p>
-    
-				<div class="bg-slate-50 p-6 rounded-lg border border-slate-200 font-mono text-sm md:text-base overflow-x-auto">
-					<p class="mb-2"><span class="font-bold text-slate-700">Passaggio 1:</span> Costo_Base = (Costi_Produzione + Default_Certificazione) / Resa_Commercializzabile</p>
-					<p class="mb-2"><span class="font-bold text-slate-700">Passaggio 2:</span> Costo_con_Margine = Costo_Base × (1 + Margine_%)</p>
-					<p class="text-emerald-700 font-bold mt-4">P_min = Costo_con_Margine + Adeguamento_Qualità + Premio_di_Rischio</p>
-				</div>
-				<p class="text-xs text-gray-500 mt-2 italic">
-					* Il prezzo finale è sempre il maggiore tra P_min o il Prezzo Minimo Consortile.
-				</p>
-
-				<div class="mt-6">
-					<p class="text-gray-600 text-lg mb-2">
-						🚜 <strong>Dati del Produttore (Variabili Dinamiche)</strong><br>
-						<span class="text-sm">Inseriti dall'agricoltore per ogni specifico lotto.</span>
-					</p>
-					<ul class="list-disc pl-5 text-gray-600 space-y-1">
-						<li><strong>Costi di produzione (€/ha):</strong> Spese operative (manodopera, concimi, carburante). Esclude la certificazione.</li>
-						<li><strong>Resa Grezza (kg/ha):</strong> Peso totale in guscio raccolto per ettaro.</li>
-						<li><strong>Resa Commercializzabile %:</strong> Il rapporto gheriglio/guscio (Punto Resa), tipicamente 40-50%.</li>
-						<li><strong>Classe di Qualità:</strong> Il grado specifico del lotto (A, B o C).</li>
-					</ul>
-				</div>
-
-				<div class="mt-6">
-					<p class="text-gray-600 text-lg mb-2">
-						🏛️ <strong>Parametri del Consorzio (Costanti Fisse)</strong><br>
-						<span class="text-sm">Impostati globalmente dall'Amministratore per garantire equità e standard condivisi.</span>
-					</p>
-					<ul class="list-disc pl-5 text-gray-600 space-y-1">
-						<li><strong>Costi Certificazione (€/ha):</strong> Costo fisso aggiunto per ogni ettaro (es. €200).</li>
-						<li><strong>Margine %:</strong> Il margine di profitto garantito all'agricoltore (es. 15%).</li>
-						<li><strong>Resa di Riferimento:</strong> La media storica (es. 1600 kg/ha) utilizzata per calcolare lo stress.</li>
-						<li><strong>Prezzo Minimo (Floor):</strong> Il prezzo assoluto di salvaguardia (rete di sicurezza).</li>
-						<li><strong>Tabelle di Adeguamento:</strong> Valori fissi in €/kg per i bonus Qualità e i premi di Rischio.</li>
-					</ul>
-				</div>
-			</section>
-
-            <section class="bg-white p-8 rounded-xl shadow-sm border border-gray-200">
-                <h2 class="text-xl font-bold text-emerald-800 mb-4 border-b border-gray-100 pb-2">2. Adeguamenti di Qualità</h2>
-                <p class="text-gray-700 mb-4">
-                    I prezzi vengono adeguati in base alla classe qualitativa del lotto per premiare l'alta uniformità e penalizzare i difetti.
+                <h2 class="text-xl font-bold text-emerald-800 mb-4 border-b border-gray-100 pb-2">1. La Formula</h2>
+                <p class="text-gray-700 mb-6">
+                    Il prezzo minimo (<strong>P_min</strong>) copre i costi di produzione, garantisce un margine di profitto e si adegua automaticamente alla classe qualitativa e al rischio climatico composito.
                 </p>
-                
+
+                <div class="bg-slate-50 p-6 rounded-lg border border-slate-200 font-mono text-sm md:text-base overflow-x-auto space-y-2">
+                    <p><span class="font-bold text-slate-700">Passo 1:</span> Resa_Commercializzabile = Resa_Grezza × (Percentuale_Commercializzabile / 100)</p>
+                    <p><span class="font-bold text-slate-700">Passo 2:</span> Costo_Base = (Costi_Produzione + Quota_Certificazione) / Resa_Commercializzabile</p>
+                    <p><span class="font-bold text-slate-700">Passo 3:</span> Costo_con_Margine = Costo_Base × (1 + Margine_%)</p>
+                    <p><span class="font-bold text-slate-700">Passo 4:</span> Correz_Qualità = lookup(Classe_Qualità)</p>
+                    <p><span class="font-bold text-slate-700">Passo 5:</span> Resa_Adeguata_Clima = Resa_Grezza × Coeff_Clima × Coeff_Resilienza</p>
+                    <p><span class="font-bold text-slate-700">Passo 6:</span> Rapporto_Adeguato = Resa_Adeguata_Clima / Resa_Riferimento</p>
+                    <p><span class="font-bold text-slate-700">Passo 7:</span> Premio_Rischio = lookup(Rapporto_Adeguato)</p>
+                    <p class="text-emerald-700 font-bold pt-3 border-t border-slate-200 mt-3">
+                        P_min = Costo_con_Margine + Correz_Qualità + Premio_Rischio
+                    </p>
+                </div>
+                <p class="text-xs text-gray-500 mt-2 italic">
+                    * Il prezzo finale è sempre il maggiore tra P_min e il Prezzo Minimo di Consorzio.
+                </p>
+
+                <!-- Input del Produttore -->
+                <div class="mt-6">
+                    <p class="text-gray-600 text-lg mb-2">
+                        🚜 <strong>Variabili del Produttore (Dati Dinamici)</strong><br>
+                        <span class="text-sm">Inseriti dal produttore per ogni specifica partita.</span>
+                    </p>
+                    <ul class="list-disc pl-5 text-gray-600 space-y-1">
+                        <li><strong>Costi di Produzione (€/ha):</strong> Spese operative per ettaro (manodopera, fertilizzanti, carburante). Esclusa la certificazione.</li>
+                        <li><strong>Resa Grezza (kg/ha):</strong> Peso totale in guscio raccolto per ettaro.</li>
+                        <li><strong>% Commercializzabile:</strong> Rapporto tra peso del gheriglio e peso totale del guscio (Resa di Sgusciatura), tipicamente 40–50%.</li>
+                        <li><strong>Classe Qualitativa:</strong> La categoria specifica della partita (A, B o C).</li>
+                        <li><strong>Coefficiente Effetto Climatico (0,5–1,5):</strong> Autovalutazione del produttore sull'impatto delle condizioni climatiche sulla resa potenziale stagionale. 1,0 = anno neutro; inferiore a 1,0 = avverso; superiore a 1,0 = favorevole.</li>
+                        <li><strong>Coefficiente di Resilienza Aziendale (0,5–1,5):</strong> Autovalutazione della capacità dell'azienda di assorbire lo stress climatico (irrigazione, assicurazioni, riserve). 1,0 = resilienza media.</li>
+                    </ul>
+                </div>
+
+                <!-- Parametri del Consorzio -->
+                <div class="mt-6">
+                    <p class="text-gray-600 text-lg mb-2">
+                        🏛️ <strong>Parametri del Consorzio (Costanti Fisse)</strong><br>
+                        <span class="text-sm">Definiti globalmente dall'Amministratore per garantire equità e uniformità di applicazione.</span>
+                    </p>
+                    <ul class="list-disc pl-5 text-gray-600 space-y-1">
+                        <li><strong>Quota Certificazione (€/ha):</strong> Costo fisso di certificazione aggiunto a ogni ettaro (es. €25).</li>
+                        <li><strong>% Commercializzabile Predefinita:</strong> Valore di default suggerito dal Consorzio, precompilato nel calcolatore (es. 45%).</li>
+                        <li><strong>Margine %:</strong> Margine di profitto obbligatorio garantito al produttore (es. 10%).</li>
+                        <li><strong>Resa di Riferimento (kg/ha):</strong> Media storica usata come benchmark per lo stress climatico (es. 1.660 kg/ha).</li>
+                        <li><strong>Prezzo Minimo di Consorzio:</strong> Prezzo minimo assoluto di sicurezza.</li>
+                        <li><strong>Tabelle di Correzione:</strong> Valori fissi in €/kg per bonus di qualità e premi di rischio.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SEZIONE 2: QUALITÀ -->
+            <section class="bg-white p-8 rounded-xl shadow-sm border border-gray-200">
+                <h2 class="text-xl font-bold text-emerald-800 mb-4 border-b border-gray-100 pb-2">2. Correzioni per la Qualità</h2>
+                <p class="text-gray-700 mb-4">
+                    Il prezzo viene corretto in base alla classe qualitativa della partita, per premiare l'alta uniformità e penalizzare i difetti.
+                </p>
+
                 <div class="overflow-hidden rounded-lg border border-gray-200">
                     <table class="w-full text-left text-sm">
                         <thead class="bg-gray-100 text-gray-700">
                             <tr>
                                 <th class="p-3 font-bold">Classe</th>
                                 <th class="p-3 font-bold">Descrizione</th>
-                                <th class="p-3 font-bold text-right">Adeguamento</th>
+                                <th class="p-3 font-bold text-right">Correzione</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100">
                             <tr>
                                 <td class="p-3 font-bold text-emerald-700">A</td>
-                                <td class="p-3">Premium: Alta uniformità, difetti minimi.</td>
-                                <td class="p-3 text-right font-mono text-emerald-700">+€0.20</td>
+                                <td class="p-3">Premium: alta uniformità, difetti minimi.</td>
+                                <td class="p-3 text-right font-mono text-emerald-700">+€0,20</td>
                             </tr>
                             <tr>
                                 <td class="p-3 font-bold text-gray-700">B</td>
-                                <td class="p-3">Standard: Qualità commerciale conforme al disciplinare IGP.</td>
-                                <td class="p-3 text-right font-mono text-gray-500">€0.00</td>
+                                <td class="p-3">Standard: qualità commerciale conforme IGP.</td>
+                                <td class="p-3 text-right font-mono text-gray-500">€0,00</td>
                             </tr>
                             <tr>
                                 <td class="p-3 font-bold text-red-700">C</td>
-                                <td class="p-3">Bassa: Qualità al limite, difetti più elevati.</td>
-                                <td class="p-3 text-right font-mono text-red-700">-€0.15</td>
+                                <td class="p-3">Bassa: qualità al limite, difetti elevati.</td>
+                                <td class="p-3 text-right font-mono text-red-700">-€0,15</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </section>
 
+            <!-- SEZIONE 3: RISCHIO CLIMATICO -->
             <section class="bg-white p-8 rounded-xl shadow-sm border border-gray-200">
-                <h2 class="text-xl font-bold text-emerald-800 mb-4 border-b border-gray-100 pb-2">3. Premio di Rischio Climatico</h2>
+                <h2 class="text-xl font-bold text-emerald-800 mb-4 border-b border-gray-100 pb-2">3. Premio per il Rischio Climatico</h2>
                 <p class="text-gray-700 mb-4">
-                    Calcoliamo un <strong>Rapporto di Resa</strong> per misurare oggettivamente lo stress del raccolto. Se la tua resa scende significativamente sotto la media di riferimento, viene applicato automaticamente un premio di rischio.
+                    Invece di basarsi esclusivamente sulla resa grezza, il sistema calcola una <strong>Resa Adeguata al Clima</strong> che combina tre segnali: il raccolto effettivo, la percezione del produttore sull'effetto climatico e la capacità di resilienza aziendale. Questo valore composito viene poi confrontato con la resa di riferimento del Consorzio per determinare il livello di rischio.
                 </p>
 
-                <div class="bg-emerald-50 p-4 rounded-lg mb-6 border border-emerald-100">
-                    <p class="text-emerald-900 font-medium text-center">
-                        Rapporto Resa = Tua Resa Commercializzabile / Resa di Riferimento (1600 kg/ha)
+                <div class="bg-blue-50 p-4 rounded-lg mb-4 border border-blue-100 space-y-2">
+                    <p class="text-blue-900 font-medium text-center">
+                        Resa_Adeguata_Clima = Resa_Grezza × Coeff_Clima × Coeff_Resilienza
                     </p>
+                    <p class="text-blue-900 font-medium text-center">
+                        Rapporto_Adeguato = Resa_Adeguata_Clima / Resa_Riferimento
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 text-sm">
+                    <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                        <p class="font-bold text-gray-700 mb-2">🌡 Coefficiente Effetto Climatico</p>
+                        <p class="text-gray-600">Autovalutazione del produttore sull'impatto climatico stagionale sulla resa potenziale. Intervallo: <strong>0,5</strong> (perdita estrema) a <strong>1,5</strong> (stagione eccezionale), passo 0,1.</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                        <p class="font-bold text-gray-700 mb-2">🛡 Coefficiente di Resilienza Aziendale</p>
+                        <p class="text-gray-600">Autovalutazione della capacità dell'azienda di assorbire lo stress climatico (irrigazione, assicurazioni, diversificazione colturale, riserve finanziarie). Intervallo: <strong>0,5</strong> (molto bassa) a <strong>1,5</strong> (molto alta), passo 0,1.</p>
+                    </div>
                 </div>
 
                 <div class="overflow-hidden rounded-lg border border-gray-200">
                     <table class="w-full text-left text-sm">
                         <thead class="bg-gray-100 text-gray-700">
                             <tr>
-                                <th class="p-3 font-bold">Rapporto Resa</th>
+                                <th class="p-3 font-bold">Rapporto Adeguato</th>
                                 <th class="p-3 font-bold">Interpretazione</th>
                                 <th class="p-3 font-bold text-right">Premio di Rischio</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100">
                             <tr>
-                                <td class="p-3 font-mono">≥ 0.90</td>
+                                <td class="p-3 font-mono">≥ 0,90</td>
                                 <td class="p-3"><span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-bold">NORMALE</span></td>
-                                <td class="p-3 text-right font-mono">€0.00</td>
+                                <td class="p-3 text-right font-mono">€0,00</td>
                             </tr>
                             <tr>
-                                <td class="p-3 font-mono">0.70 – 0.89</td>
+                                <td class="p-3 font-mono">0,70 – 0,89</td>
                                 <td class="p-3"><span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs font-bold">STRESS LIEVE</span></td>
-                                <td class="p-3 text-right font-mono">+€0.10</td>
+                                <td class="p-3 text-right font-mono">+€0,10</td>
                             </tr>
                             <tr>
-                                <td class="p-3 font-mono">0.50 – 0.69</td>
+                                <td class="p-3 font-mono">0,50 – 0,69</td>
                                 <td class="p-3"><span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs font-bold">GRAVE</span></td>
-                                <td class="p-3 text-right font-mono">+€0.25</td>
+                                <td class="p-3 text-right font-mono">+€0,25</td>
                             </tr>
                             <tr>
-                                <td class="p-3 font-mono">< 0.50</td>
+                                <td class="p-3 font-mono">&lt; 0,50</td>
                                 <td class="p-3"><span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-bold">ESTREMO</span></td>
-                                <td class="p-3 text-right font-mono">+€0.40</td>
+                                <td class="p-3 text-right font-mono">+€0,40</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
+
+                <p class="text-xs text-gray-500 mt-3 italic">
+                    * Esempio: Resa Grezza = 2.000 kg/ha, Coeff. Clima = 0,8, Coeff. Resilienza = 0,9 →
+                    Resa Adeguata al Clima = 1.440 kg/ha → Rapporto = 1.440 / 1.660 = 0,87 → Stress Lieve → +€0,10
+                </p>
             </section>
 
         </main>
-        
+
         <footer class="mt-12 text-center text-gray-500 text-sm pb-8">
-            &copy; 2026 Consorzio Nocciola IGP. Trasparenza Open Source.
+            &copy; 2026 Consorzio Nocciole IGP. Trasparenza Open Source.
         </footer>
     </div>
 </body>

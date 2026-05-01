@@ -1,6 +1,7 @@
 {
     "min_margin_pct": 0.1,
-    "certification_defaults_ha": 150,
+    "certification_defaults_ha": 25,
+    "default_marketable_pct": 45,
     "reference_yield_kg_ha": 1660,
     "min_consortium_price": 3.62,
     "quality_table": {

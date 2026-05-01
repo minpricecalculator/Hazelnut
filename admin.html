@@ -1,22 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>PGI Admin - Parameter Management</title>
-	<link rel="icon" type="image/x-icon" href="favicon.ico">
+    <title>Pannello Admin IGP - Gestione Parametri</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-100 p-8">
     <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg">
         <h2 class="text-2xl font-bold text-slate-800 mb-6 border-b pb-2">Pannello di Amministrazione del Consorzio</h2>
-        
+
         <div id="login-section" class="space-y-4 max-w-md mx-auto">
             <input type="password" id="adminPass" placeholder="Inserisci Password Amministratore" class="w-full p-2 border rounded">
             <button onclick="login()" class="w-full bg-slate-800 text-white p-2 rounded hover:bg-slate-700">Accedi</button>
         </div>
 
         <div id="admin-controls" class="hidden grid grid-cols-1 md:grid-cols-2 gap-8">
-            
+
             <div class="space-y-4">
                 <h3 class="font-bold text-emerald-700 border-b">Basi Economiche</h3>
                 <div>
@@ -24,23 +24,27 @@
                     <input type="number" id="marginInput" step="0.01" class="w-full p-2 border rounded">
                 </div>
                 <div>
-                    <label class="block text-sm font-bold">Certificato Valori predefiniti (€/ha)</label>
+                    <label class="block text-sm font-bold">Quota Certificazione (€/ha)</label>
                     <input type="number" id="certDefaultInput" step="0.01" class="w-full p-2 border rounded">
                 </div>
                 <div>
-                    <label class="block text-sm font-bold">Resa di riferimento (kg/ha)</label>
+                    <label class="block text-sm font-bold">% Commercializzabile Predefinita <span class="text-gray-400 font-normal">(precompila il calcolatore)</span></label>
+                    <input type="number" id="defaultMarketablePct" step="0.1" min="1" max="100" class="w-full p-2 border rounded">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold">Resa di Riferimento (kg/ha)</label>
                     <input type="number" id="refYieldInput" step="1" class="w-full p-2 border rounded">
                 </div>
                 <div>
-                    <label class="block text-sm font-bold">Prezzo minimo del consorzio (€)</label>
+                    <label class="block text-sm font-bold">Prezzo Minimo del Consorzio (€)</label>
                     <input type="number" id="minPriceInput" step="0.01" class="w-full p-2 border rounded">
                 </div>
             </div>
 
             <div class="space-y-6">
-                
+
                 <div>
-                    <h3 class="font-bold text-emerald-700 border-b mb-2">Aggiustamenti di qualità (€/kg)</h3>
+                    <h3 class="font-bold text-emerald-700 border-b mb-2">Correzioni di Qualità (€/kg)</h3>
                     <div class="grid grid-cols-3 gap-2">
                         <div>
                             <label class="text-xs">Classe A</label>
@@ -58,23 +62,23 @@
                 </div>
 
                 <div>
-                    <h3 class="font-bold text-emerald-700 border-b mb-2">Premi di rischio</h3>
-                    <div class="text-xs text-gray-500 mb-2">Premi per annate normali, moderate, severe, estreme</div>
+                    <h3 class="font-bold text-emerald-700 border-b mb-2">Premi di Rischio</h3>
+                    <div class="text-xs text-gray-500 mb-2">Premi per annate: normale, stress lieve, grave, estremo</div>
                     <div class="grid grid-cols-2 gap-2">
                         <div>
-                            <label class="text-xs">Normale (Rapporto >= 0.9)</label>
+                            <label class="text-xs">Normale (Rapporto ≥ 0,9)</label>
                             <input type="number" id="riskPrem0" step="0.01" class="w-full p-1 border rounded">
                         </div>
                         <div>
-                            <label class="text-xs">Leggera (Rapporto >= 0.7)</label>
+                            <label class="text-xs">Stress Lieve (Rapporto ≥ 0,7)</label>
                             <input type="number" id="riskPrem1" step="0.01" class="w-full p-1 border rounded">
                         </div>
                         <div>
-                            <label class="text-xs">Severe (Rapporto >= 0.5)</label>
+                            <label class="text-xs">Grave (Rapporto ≥ 0,5)</label>
                             <input type="number" id="riskPrem2" step="0.01" class="w-full p-1 border rounded">
                         </div>
                         <div>
-                            <label class="text-xs">Estrema (Rapporto < 0.5)</label>
+                            <label class="text-xs">Estremo (Rapporto &lt; 0,5)</label>
                             <input type="number" id="riskPrem3" step="0.01" class="w-full p-1 border rounded">
                         </div>
                     </div>
@@ -83,7 +87,7 @@
 
             <div class="md:col-span-2 pt-4">
                 <button onclick="updateParams()" class="w-full bg-emerald-600 text-white font-bold p-3 rounded hover:bg-emerald-700 shadow-md">
-                    Salva parametri globali
+                    Salva Parametri Globali
                 </button>
             </div>
         </div>
@@ -105,32 +109,33 @@
             if (response.ok) {
                 document.getElementById('login-section').classList.add('hidden');
                 document.getElementById('admin-controls').classList.remove('hidden');
-                loadCurrentParams(); 
+                loadCurrentParams();
             } else {
-                alert('Invalid Password');
+                alert('Password non valida');
             }
-        } catch (e) { alert("Backend offline"); }
+        } catch (e) { alert("Backend non raggiungibile"); }
     }
 
     async function loadCurrentParams() {
-		const response = await fetch(`${API_BASE_URL}/admin/parameters`, {
-			credentials: 'include' // This tells the browser to send the "key"
-		});
-    
-		if (response.status === 401) {
-			alert("Sessione scaduta. Effettua nuovamente l'accesso.");
-			return;
-		}
+        const response = await fetch(`${API_BASE_URL}/admin/parameters`, {
+            credentials: 'include'
+        });
 
-		const p = await response.json();
-		
-        // Economics
-        document.getElementById('marginInput').value = p.min_margin_pct;
-        document.getElementById('certDefaultInput').value = p.certification_defaults_ha;
-        document.getElementById('refYieldInput').value = p.reference_yield_kg_ha;
-        document.getElementById('minPriceInput').value = p.min_consortium_price;
+        if (response.status === 401) {
+            alert("Sessione scaduta. Effettua nuovamente l'accesso.");
+            return;
+        }
 
-        // Quality
+        const p = await response.json();
+
+        // Basi economiche
+        document.getElementById('marginInput').value          = p.min_margin_pct;
+        document.getElementById('certDefaultInput').value     = p.certification_defaults_ha;
+        document.getElementById('defaultMarketablePct').value = p.default_marketable_pct ?? 45;
+        document.getElementById('refYieldInput').value        = p.reference_yield_kg_ha;
+        document.getElementById('minPriceInput').value        = p.min_consortium_price;
+
+        // Qualità
         document.getElementById('qualityA').value = p.quality_table.A;
         document.getElementById('qualityB').value = p.quality_table.B;
         document.getElementById('qualityC').value = p.quality_table.C;
@@ -144,17 +149,18 @@
 
     async function updateParams() {
         const newParams = {
-            min_margin_pct: parseFloat(document.getElementById('marginInput').value),
+            min_margin_pct:           parseFloat(document.getElementById('marginInput').value),
             certification_defaults_ha: parseFloat(document.getElementById('certDefaultInput').value),
-            reference_yield_kg_ha: parseFloat(document.getElementById('refYieldInput').value),
-            min_consortium_price: parseFloat(document.getElementById('minPriceInput').value),
+            default_marketable_pct:   parseFloat(document.getElementById('defaultMarketablePct').value),
+            reference_yield_kg_ha:    parseFloat(document.getElementById('refYieldInput').value),
+            min_consortium_price:     parseFloat(document.getElementById('minPriceInput').value),
             quality_table: {
                 A: parseFloat(document.getElementById('qualityA').value),
                 B: parseFloat(document.getElementById('qualityB').value),
                 C: parseFloat(document.getElementById('qualityC').value)
             },
             risk_table: {
-                thresholds: [0.90, 0.70, 0.50], 
+                thresholds: [0.90, 0.70, 0.50],
                 premiums: [
                     parseFloat(document.getElementById('riskPrem0').value),
                     parseFloat(document.getElementById('riskPrem1').value),

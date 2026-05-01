@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calcolatore del prezzo della nocciola IGP</title>
-	<link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Simple Tooltip Logic */
         .tooltip {
             position: relative;
             display: inline-block;
@@ -15,29 +14,28 @@
         }
         .tooltip .tooltip-text {
             visibility: hidden;
-            width: 220px;
-            background-color: #1f2937; /* Dark gray */
+            width: 240px;
+            background-color: #1f2937;
             color: #fff;
             text-align: center;
             border-radius: 6px;
             padding: 8px;
             position: absolute;
-            z-index: 1;
-            bottom: 125%; /* Position above */
+            z-index: 10;
+            bottom: 125%;
             left: 50%;
-            margin-left: -110px;
+            margin-left: -120px;
             opacity: 0;
             transition: opacity 0.3s;
             font-size: 0.75rem;
             font-weight: normal;
-            pointer-events: none; /* Prevents flickering */
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            pointer-events: none;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
         }
         .tooltip:hover .tooltip-text {
             visibility: visible;
             opacity: 1;
         }
-        /* Arrow for the tooltip */
         .tooltip .tooltip-text::after {
             content: "";
             position: absolute;
@@ -47,6 +45,34 @@
             border-width: 5px;
             border-style: solid;
             border-color: #1f2937 transparent transparent transparent;
+        }
+        input[type=range] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #d1fae5;
+            outline: none;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #059669;
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        input[type=range]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #059669;
+            cursor: pointer;
+            border: 2px solid white;
         }
     </style>
 </head>
@@ -63,26 +89,28 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <section class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
                 <h2 class="text-xl font-semibold mb-4 text-gray-700 border-b pb-2">Dati aziendali</h2>
-                <form id="calcForm" class="space-y-6">
-                    
+                <form id="calcForm" class="space-y-5">
+
+                    <!-- Costi di produzione -->
                     <div>
                         <div class="flex items-center gap-2 mb-1">
                             <label class="block text-sm font-medium text-gray-700">Costi di produzione (€/ha)</label>
                             <div class="tooltip text-gray-400 hover:text-emerald-600">
                                 &#9432;
                                 <span class="tooltip-text">
-                                    Costi operativi totali per ettaro (fertilizzanti, manodopera, carburante, ecc.). <br>
-                                    <strong>NON includere le spese di certificazione</strong> (queste vengono aggiunte automaticamente).
+                                    Costi operativi totali per ettaro (fertilizzanti, manodopera, carburante, ecc.).<br>
+                                    <strong>NON includere le spese di certificazione</strong> (vengono aggiunte automaticamente).
                                 </span>
                             </div>
                         </div>
                         <input type="number" id="prodCost" step="0.01" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="ad esempio 3000" required>
                     </div>
-                    
+
+                    <!-- Resa Grezza + Commercializzabile % -->
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <div class="flex items-center gap-2 mb-1">
-                                <label class="block text-sm font-medium text-gray-700">Resa Grezza (kg)</label>
+                                <label class="block text-sm font-medium text-gray-700">Resa Grezza (kg/ha)</label>
                                 <div class="tooltip text-gray-400 hover:text-emerald-600">
                                     &#9432;
                                     <span class="tooltip-text">
@@ -92,15 +120,14 @@
                             </div>
                             <input type="number" id="yield" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="ad esempio 2000" required>
                         </div>
-                        
                         <div>
                             <div class="flex items-center gap-2 mb-1">
                                 <label class="block text-sm font-medium text-gray-700">Commercializzabile %</label>
                                 <div class="tooltip text-gray-400 hover:text-emerald-600">
                                     &#9432;
                                     <span class="tooltip-text">
-                                        Nota anche come "Resa Commerciale" o "Punto di Resa"."<br>
-                                        La percentuale del peso del seme rispetto al peso totale del guscio (solitamente 40-50%).
+                                        Nota anche come "Resa Commerciale" o "Punto di Resa".<br>
+                                        La percentuale del peso del seme rispetto al peso totale del guscio (solitamente 40–50%).
                                     </span>
                                 </div>
                             </div>
@@ -108,15 +135,16 @@
                         </div>
                     </div>
 
+                    <!-- Classe di Qualità -->
                     <div>
                         <div class="flex items-center gap-2 mb-1">
                             <label class="block text-sm font-medium text-gray-700">Classe di Qualità</label>
                             <div class="tooltip text-gray-400 hover:text-emerald-600">
                                 &#9432;
                                 <span class="tooltip-text">
-                                    <strong>Classe A:</strong> Premium<br>
-                                    <strong>Classe B:</strong> Standard<br>
-                                    <strong>Classe C:</strong> Bassa Qualità
+                                    <strong>Classe A:</strong> Premium, difetti minimi.<br>
+                                    <strong>Classe B:</strong> Standard IGP.<br>
+                                    <strong>Classe C:</strong> Qualità al limite / difetti elevati.
                                 </span>
                             </div>
                         </div>
@@ -127,25 +155,80 @@
                         </select>
                     </div>
 
-                    <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-3 rounded-md hover:bg-emerald-700 transition shadow-lg mt-4">
+                    <!-- Valutazione Rischio Climatico -->
+                    <div class="bg-blue-50 border border-blue-100 rounded-lg p-4 space-y-4">
+                        <h3 class="text-sm font-bold text-blue-800 uppercase tracking-wide">🌦 Valutazione del Rischio Climatico</h3>
+
+                        <!-- Coefficiente Effetto Climatico -->
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <div class="flex items-center gap-2">
+                                    <label class="text-sm font-medium text-gray-700">Effetto Climatico</label>
+                                    <div class="tooltip text-gray-400 hover:text-emerald-600">
+                                        &#9432;
+                                        <span class="tooltip-text">
+                                            Come hanno influito le condizioni climatiche stagionali sulla resa potenziale?<br><br>
+                                            <strong>0,5</strong> = impatto estremamente negativo (siccità, gelo, grandine)<br>
+                                            <strong>1,0</strong> = anno neutro / nella media<br>
+                                            <strong>1,5</strong> = condizioni eccezionalmente favorevoli
+                                        </span>
+                                    </div>
+                                </div>
+                                <span id="climateCoeffVal" class="text-lg font-bold text-blue-700 w-10 text-right">1,0</span>
+                            </div>
+                            <input type="range" id="climateCoeff" min="0.5" max="1.5" step="0.1" value="1.0">
+                            <div class="flex justify-between text-xs text-gray-400 mt-1">
+                                <span>0,5 — Perdita estrema</span>
+                                <span>1,0 — Normale</span>
+                                <span>1,5 — Eccezionale</span>
+                            </div>
+                        </div>
+
+                        <!-- Coefficiente di Resilienza Aziendale -->
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <div class="flex items-center gap-2">
+                                    <label class="text-sm font-medium text-gray-700">Resilienza Aziendale</label>
+                                    <div class="tooltip text-gray-400 hover:text-emerald-600">
+                                        &#9432;
+                                        <span class="tooltip-text">
+                                            Quanto riesce la tua azienda ad assorbire lo stress climatico? (irrigazione, assicurazioni, diversificazione colturale, riserve finanziarie)<br><br>
+                                            <strong>0,5</strong> = resilienza molto bassa<br>
+                                            <strong>1,0</strong> = resilienza nella media<br>
+                                            <strong>1,5</strong> = resilienza molto elevata
+                                        </span>
+                                    </div>
+                                </div>
+                                <span id="copingCoeffVal" class="text-lg font-bold text-blue-700 w-10 text-right">1,0</span>
+                            </div>
+                            <input type="range" id="copingCoeff" min="0.5" max="1.5" step="0.1" value="1.0">
+                            <div class="flex justify-between text-xs text-gray-400 mt-1">
+                                <span>0,5 — Molto bassa</span>
+                                <span>1,0 — Nella media</span>
+                                <span>1,5 — Molto elevata</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-3 rounded-md hover:bg-emerald-700 transition shadow-lg">
                         Calcola il Prezzo Minimo
                     </button>
                 </form>
             </section>
 
+            <!-- Risultati -->
             <section id="results" class="bg-emerald-50 p-6 rounded-xl border border-emerald-100 hidden">
                 <h2 class="text-xl font-semibold mb-4 text-emerald-900 border-b border-emerald-200 pb-2">Risultato del Calcolo</h2>
-                
+
                 <div class="text-center py-8">
                     <span class="text-xs font-bold uppercase text-emerald-600 tracking-widest">Prezzo Minimo Sostenibile</span>
-                    <div class="text-6xl font-black text-emerald-900 my-2" id="finalPrice">€0.00</div>
+                    <div class="text-6xl font-black text-emerald-900 my-2" id="finalPrice">€0,00</div>
                     <span class="text-emerald-700 font-medium">al kg (in guscio)</span>
                 </div>
-                
+
                 <div class="bg-white rounded-lg p-4 shadow-sm border border-emerald-100">
                     <h3 class="font-bold text-emerald-800 mb-3 text-sm uppercase">Ripartizione dei Costi</h3>
-                    <div id="breakdown" class="text-sm space-y-3 text-emerald-900">
-                        </div>
+                    <div id="breakdown" class="text-sm space-y-3 text-emerald-900"></div>
                 </div>
             </section>
         </div>
