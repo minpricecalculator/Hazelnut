@@ -1,78 +1,189 @@
-# Calcolatore del prezzo della nocciola IGP 🌰
+# PGI Hazelnut Price Calculator 🌰
 
+**A transparent, open-source tool for determining the economically sustainable minimum price for Giffoni Hazelnut PGI producers.**
 
-Metodologia di Calcolo
+This project allows farmers to calculate a fair minimum price ($P_{min}$) that covers production costs, guarantees a profit margin, and automatically adjusts for quality grade and a composite climate risk assessment. All parameters are managed by the Consortium administrator and applied consistently across all farms.
 
-Come determiniamo il prezzo minimo economicamente sostenibile.
-1. La Formula
+---
 
-Il prezzo minimo (P_min) copre i costi di produzione, garantisce un margine di profitto e si adegua automaticamente alla classe qualitativa e al rischio climatico composito.
+## 🌐 Live Calculator
 
-Passo 1: Resa_Commercializzabile = Resa_Grezza × (Percentuale_Commercializzabile / 100)
+**[minpricecalculator.github.io/Hazelnut/index.html](https://minpricecalculator.github.io/Hazelnut/index.html)**
 
-Passo 2: Costo_Base = (Costi_Produzione + Quota_Certificazione) / Resa_Commercializzabile
+---
 
-Passo 3: Costo_con_Margine = Costo_Base × (1 + Margine_%)
+## 📐 Calculation Methodology
 
-Passo 4: Correz_Qualità = lookup(Classe_Qualità)
+The calculator uses a 7-step algorithm to ensure fairness, transparency, and economic sustainability.
 
-Passo 5: Resa_Adeguata_Clima = Resa_Grezza × Coeff_Clima × Coeff_Resilienza
+### The Core Formula
 
-Passo 6: Rapporto_Adeguato = Resa_Adeguata_Clima / Resa_Riferimento
+$$P_{min} = \text{Cost with Margin} + \text{Quality Adjustment} + \text{Risk Premium}$$
 
-Passo 7: Premio_Rischio = lookup(Rapporto_Adeguato)
+*The final price is always the greater of $P_{min}$ or the Consortium Floor Price.*
 
-P_min = Costo_con_Margine + Correz_Qualità + Premio_Rischio
+---
 
-* Il prezzo finale è sempre il maggiore tra P_min e il Prezzo Minimo di Consorzio.
+### Step-by-Step Logic
 
-🚜 Variabili del Produttore (Dati Dinamici)
-Inseriti dal produttore per ogni specifica partita.
+#### Step 1: Marketable Yield
+The actual net kernel weight per hectare, derived from the raw in-shell harvest.
 
-    Costi di Produzione (€/ha): Spese operative per ettaro (manodopera, fertilizzanti, carburante). Esclusa la certificazione.
-    Resa Grezza (kg/ha): Peso totale in guscio raccolto per ettaro.
-    % Commercializzabile: Rapporto tra peso del gheriglio e peso totale del guscio (Resa di Sgusciatura), tipicamente 40–50%.
-    Classe Qualitativa: La categoria specifica della partita (A, B o C).
-    Coefficiente Effetto Climatico (0,5–1,5): Autovalutazione del produttore sull'impatto delle condizioni climatiche sulla resa potenziale stagionale. 1,0 = anno neutro; inferiore a 1,0 = avverso; superiore a 1,0 = favorevole.
-    Coefficiente di Resilienza Aziendale (0,5–1,5): Autovalutazione della capacità dell'azienda di assorbire lo stress climatico (irrigazione, assicurazioni, riserve). 1,0 = resilienza media.
+```
+Marketable_Yield = Raw_Yield_kg_ha × (Marketable_% / 100)
+```
 
-🏛️ Parametri del Consorzio (Costanti Fisse)
-Definiti globalmente dall'Amministratore per garantire equità e uniformità di applicazione.
+> Yield is expressed **in-shell (kg/ha)**. The Marketable % (kernel-to-shell ratio, also known as "yield point") defaults to **45%** but is editable by the farmer per batch.
 
-    Quota Certificazione (€/ha): Costo fisso di certificazione aggiunto a ogni ettaro (es. €25).
-    % Commercializzabile Predefinita: Valore di default suggerito dal Consorzio, precompilato nel calcolatore (es. 45%).
-    Margine %: Margine di profitto obbligatorio garantito al produttore (es. 10%).
-    Resa di Riferimento (kg/ha): Media storica usata come benchmark per lo stress climatico (es. 1.660 kg/ha).
-    Prezzo Minimo di Consorzio: Prezzo minimo assoluto di sicurezza.
-    Tabelle di Correzione: Valori fissi in €/kg per bonus di qualità e premi di rischio.
+---
 
-2. Correzioni per la Qualità
+#### Step 2: Base Production Cost
+The break-even cost per kg, incorporating the fixed certification fee set by the Consortium.
 
-Il prezzo viene corretto in base alla classe qualitativa della partita, per premiare l'alta uniformità e penalizzare i difetti.
-Classe 	Descrizione 	Correzione
-A 	Premium: alta uniformità, difetti minimi. 	+€0,20
-B 	Standard: qualità commerciale conforme IGP. 	€0,00
-C 	Bassa: qualità al limite, difetti elevati. 	-€0,15
-3. Premio per il Rischio Climatico
+```
+Base_Cost = (Production_Costs_ha + Certification_Defaults_ha) / Marketable_Yield
+```
 
-Invece di basarsi esclusivamente sulla resa grezza, il sistema calcola una Resa Adeguata al Clima che combina tre segnali: il raccolto effettivo, la percezione del produttore sull'effetto climatico e la capacità di resilienza aziendale. Questo valore composito viene poi confrontato con la resa di riferimento del Consorzio per determinare il livello di rischio.
+> Certification defaults are currently set at **€25/ha**, managed by the Consortium administrator.
 
-Resa_Adeguata_Clima = Resa_Grezza × Coeff_Clima × Coeff_Resilienza
+---
 
-Rapporto_Adeguato = Resa_Adeguata_Clima / Resa_Riferimento
+#### Step 3: Economic Margin
+A mandatory profit margin is applied to ensure farm sustainability.
 
-🌡 Coefficiente Effetto Climatico
+```
+Cost_with_Margin = Base_Cost × (1 + Margin_%)
+```
 
-Autovalutazione del produttore sull'impatto climatico stagionale sulla resa potenziale. Intervallo: 0,5 (perdita estrema) a 1,5 (stagione eccezionale), passo 0,1.
+> The margin is currently set at **10%**, fixed by the Consortium.
 
-🛡 Coefficiente di Resilienza Aziendale
+---
 
-Autovalutazione della capacità dell'azienda di assorbire lo stress climatico (irrigazione, assicurazioni, diversificazione colturale, riserve finanziarie). Intervallo: 0,5 (molto bassa) a 1,5 (molto alta), passo 0,1.
-Rapporto Adeguato 	Interpretazione 	Premio di Rischio
-≥ 0,90 	NORMALE 	€0,00
-0,70 – 0,89 	STRESS LIEVE 	+€0,10
-0,50 – 0,69 	GRAVE 	+€0,25
-< 0,50 	ESTREMO 	+€0,40
+#### Step 4: Quality Adjustment
+A fixed €/kg correction is applied based on the quality class of the batch.
 
-* Esempio: Resa Grezza = 2.000 kg/ha, Coeff. Clima = 0,8, Coeff. Resilienza = 0,9 → Resa Adeguata al Clima = 1.440 kg/ha → Rapporto = 1.440 / 1.660 = 0,87 → Stress Lieve → +€0,10
+| Class | Description | Adjustment (€/kg) |
+| :--- | :--- | :--- |
+| **A** | Premium: high uniformity, low defects. | **+€0.20** |
+| **B** | Standard: PGI-compliant commercial quality. | **€0.00** |
+| **C** | Low: borderline quality, higher defects. | **−€0.15** |
 
+> Defaults to **Class B**. Editable by the farmer per batch.
+
+---
+
+#### Step 5: Climate-Adjusted Yield
+Rather than relying on raw yield alone, the system computes a composite signal combining the actual harvest with two farmer-reported coefficients.
+
+```
+Climate_Adjusted_Yield = Raw_Yield × Climate_Coeff × Coping_Coeff
+```
+
+| Coefficient | Description | Range |
+| :--- | :--- | :--- |
+| **Climate Effect** | Farmer's self-assessment of seasonal climate impact on yield potential. 1.0 = neutral year; < 1.0 = adverse; > 1.0 = favourable. | 0.5 – 1.5 |
+| **Coping Capacity** | Farmer's self-assessment of farm resilience to climate stress (irrigation, insurance, financial reserves). | 0.5 – 1.5 |
+
+Both are entered via sliders in the calculator interface.
+
+---
+
+#### Step 6: Adjusted Ratio
+The climate-adjusted yield is compared against the Consortium's reference yield benchmark.
+
+```
+Adjusted_Ratio = Climate_Adjusted_Yield / Reference_Yield
+```
+
+> Reference Yield is currently set at **1,660 kg/ha**, managed by the Consortium administrator.
+
+---
+
+#### Step 7: Risk Premium
+The Adjusted Ratio determines the risk tier and corresponding premium.
+
+| Adjusted Ratio | Interpretation | Risk Premium (€/kg) |
+| :--- | :--- | :--- |
+| **≥ 0.90** | Normal year | **€0.00** |
+| **0.70 – 0.89** | Mild stress | **+€0.10** |
+| **0.50 – 0.69** | Severe stress | **+€0.25** |
+| **< 0.50** | Extreme year | **+€0.40** |
+
+---
+
+## ⚙️ Consortium Parameters
+
+All fixed parameters are managed by the Consortium administrator via the admin panel and take effect immediately for all subsequent calculations.
+
+| Parameter | Current Value |
+| :--- | :--- |
+| Certification Defaults | €25/ha |
+| Default Marketable % | 45% |
+| Minimum Margin | 10% |
+| Reference Yield | 1,660 kg/ha |
+| Floor Price | €3.62/kg |
+
+---
+
+## 🏗 Technical Architecture
+
+| Layer | Technology |
+| :--- | :--- |
+| **Frontend** | HTML / Tailwind CSS / Vanilla JS — hosted on GitHub Pages |
+| **Backend** | Python / Flask REST API — deployed on Render |
+| **Parameters** | JSON file, editable at runtime via admin panel |
+| **Auth** | Session-based admin login (cookie, HTTPS) |
+
+---
+
+## 📁 Project Structure
+
+```
+├── index.html        # Public calculator (Italian)
+├── about.html        # Methodology documentation (English)
+├── about_it.html     # Methodology documentation (Italian)
+├── admin.html        # Consortium admin panel
+├── app.js            # Frontend logic
+├── app.py            # Flask backend & calculation engine
+├── params.json       # Live consortium parameters
+└── requirements.txt  # Python dependencies
+```
+
+---
+
+## 🚀 Running Locally
+
+**Backend:**
+```bash
+cd hazelnut-project
+python -m venv venv
+venv\Scripts\activate        # Windows
+source venv/bin/activate     # macOS/Linux
+pip install -r requirements.txt
+python app.py
+```
+
+**Frontend:**
+```bash
+cd hazelnut-project
+python -m http.server 8000
+```
+
+Then open **[http://127.0.0.1:8000/index.html](http://127.0.0.1:8000/index.html)**
+
+> Make sure to serve the frontend via HTTP server — opening `index.html` directly as a file (`file://`) will block API calls.
+
+---
+
+## 🔮 Planned Features (Stage 2)
+
+The following features have been designed and are pending Consortium validation:
+
+- **PGI Brand Premium** — farmer self-reported IGP profitability uplift, applied as `Cost_with_Margin × IGP_uplift_%`
+- **Terrain Type Correction** — a structural risk factor (+€0.05) for hilly terrain
+
+---
+
+## 📄 License
+
+Open source. Developed for the Consortium for the Protection of the Giffoni Hazelnut PGI.
