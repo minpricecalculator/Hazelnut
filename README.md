@@ -175,15 +175,6 @@ Then open **[http://127.0.0.1:8000/index.html](http://127.0.0.1:8000/index.html)
 
 ---
 
-## 🔮 Planned Features (Stage 2)
-
-The following features have been designed and are pending Consortium validation:
-
-- **PGI Brand Premium** — farmer self-reported IGP profitability uplift, applied as `Cost_with_Margin × IGP_uplift_%`
-- **Terrain Type Correction** — a structural risk factor (+€0.05) for hilly terrain
-
----
-
 ## 📄 License
 
 Open source. Developed for the Consortium for the Protection of the Giffoni Hazelnut PGI.
